@@ -63,7 +63,7 @@ export default function OverviewPage() {
               { title: "Total Shipments", value: stats?.total_shipments ?? 0, icon: Package, color: "text-primary", change: "+12% this month", changeType: "positive" as const },
               { title: "In Transit",      value: stats?.in_transit ?? 0,       icon: Truck,   color: "text-blue-400",  subtitle: "Active deliveries" },
               { title: "Delivered",       value: stats?.delivered ?? 0,        icon: CheckCircle, color: "text-green-400", change: `${formatPercent(stats?.on_time_rate ?? 0)} on time`, changeType: "positive" as const },
-              { title: "Needs Attention", value: (stats?.pending ?? 0) + (stats?.failed ?? 0), icon: AlertTriangle, color: "text-amber-400", subtitle: "Pending & failed" },
+             { title: "Needs Attention", value: stats?.failed ?? 0, icon: AlertTriangle, color: "text-amber-400", subtitle: "Failed shipments" },
             ].map((card, i) => (
               <motion.div key={card.title} custom={i} variants={FADE_UP} initial="hidden" animate="show">
                 <StatCard {...card} iconColor={card.color} />
