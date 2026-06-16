@@ -1,0 +1,64 @@
+{
+  "family": "atozroutes-backend",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::ACCOUNT_ID:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::ACCOUNT_ID:role/atozroutes-task-role",
+  "containerDefinitions": [
+    {
+      "name": "backend",
+      "image": "ACCOUNT_ID.dkr.ecr.ap-south-1.amazonaws.com/atozroutes-backend:latest",
+      "portMappings": [
+        { "containerPort": 8000, "protocol": "tcp" }
+      ],
+      "essential": true,
+      "environment": [
+        { "name": "APP_ENV",    "value": "production" },
+        { "name": "DEBUG",      "value": "false" }
+      ],
+      "secrets": [
+        { "name": "SECRET_KEY",          "valueFrom": "arn:aws:secretsmanager:ap-south-1:ACCOUNT_ID:secret:atozroutes/secret-key" },
+        { "name": "POSTGRES_PASSWORD",   "valueFrom": "arn:aws:secretsmanager:ap-south-1:ACCOUNT_ID:secret:atozroutes/db-password" },
+        { "name": "POSTGRES_HOST",       "valueFrom": "arn:aws:secretsmanager:ap-south-1:ACCOUNT_ID:secret:atozroutes/db-host" },
+        { "name": "POSTGRES_USER",       "valueFrom": "arn:aws:secretsmanager:ap-south-1:ACCOUNT_ID:secret:atozroutes/db-user" },
+        { "name": "POSTGRES_DB",         "valueFrom": "arn:aws:secretsmanager:ap-south-1:ACCOUNT_ID:secret:atozroutes/db-name" },
+        { "name": "REDIS_HOST",          "valueFrom": "arn:aws:secretsmanager:ap-south-1:ACCOUNT_ID:secret:atozroutes/redis-host" },
+        { "name": "MAPBOX_ACCESS_TOKEN", "valueFrom": "arn:aws:secretsmanager:ap-south-1:ACCOUNT_ID:secret:atozroutes/mapbox-token" }
+      ],
+      "healthCheck": {
+        "command": ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"],
+        "interval": 30,
+        "timeout": 10,
+        "retries": 3,
+        "startPeriod": 60
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group":         "/ecs/atozroutes-backend",
+          "awslogs-region":        "ap-south-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "mountPoints": [
+        {
+          "sourceVolume": "ai-models",
+          "containerPath": "/app/ai/models",
+          "readOnly": false
+        }
+      ]
+    }
+  ],
+  "volumes": [
+    {
+      "name": "ai-models",
+      "efsVolumeConfiguration": {
+        "fileSystemId": "fs-XXXXXXXX",
+        "rootDirectory": "/ai-models",
+        "transitEncryption": "ENABLED"
+      }
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+# ── Environment variables (NEVER commit these) ────────────────────────────────
+.env
+.env.local
+.env.production
+.env.*.local
+infrastructure/.env
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# ── Node / Next.js ────────────────────────────────────────────────────────────
+node_modules/
+.next/
+out/
+npm-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ── AI models (large binary files — store in S3 or Docker volume) ─────────────
+backend/ai/models/*.json
+backend/ai/models/*.pkl
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ── OS ────────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.log
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+infrastructure/.env.production
