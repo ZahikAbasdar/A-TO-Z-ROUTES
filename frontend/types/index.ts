@@ -228,6 +228,7 @@ export interface ShipmentTrend {
 // ── WebSocket ─────────────────────────────────────────────────────────────────
 
 export type WSMessageType =
+  | "connected"
   | "tracking_update"
   | "driver_location"
   | "shipment_status"
