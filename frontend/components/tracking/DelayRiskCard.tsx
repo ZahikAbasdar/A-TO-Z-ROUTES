@@ -41,7 +41,8 @@ export function DelayRiskCard({
     });
   };
 
-  const displayRisk = (prediction as any)?.risk_level ?? riskLevel;
+ const displayRisk: "low" | "medium" | "high" =
+  ((prediction as any)?.risk_level ?? riskLevel) as "low" | "medium" | "high";
   const riskScore   = (prediction as any)?.risk_score;
   const factors     = (prediction as any)?.factors ?? [];
   const confidence  = (prediction as any)?.confidence;
