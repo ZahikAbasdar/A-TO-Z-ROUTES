@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-// import { DM_Sans } from "next/font/google";
-// import "./globals.css";
+import "./globals.css";
 import { Providers } from "@/components/shared/Providers";
 import { Toaster } from "react-hot-toast";
-
 export const metadata: Metadata = {
   title: { default: "A to Z Routes", template: "%s | A to Z Routes" },
   description: "Premium logistics intelligence platform. Track every mile, from A to Z.",

@@ -164,11 +164,12 @@
   }
 
   /* Data table row */
-  .table-row-hover {
-    @apply border-b border-white/4 hover:bg-white/2 transition-colors duration-100;
-  }
+.table-row-hover {
+  @apply border-b border-white/5 hover:bg-white/5 transition-colors duration-100;
+}
 }
 
+/* ── Mapbox overrides ─────────────────────────────────────────────────────── */
 /* ── Mapbox overrides ─────────────────────────────────────────────────────── */
 .mapboxgl-map {
   border-radius: inherit;
